@@ -8,7 +8,7 @@ class DebtEntry:
         self.interest_rate = interest_rate
         self.minimum_payment = minimum_payment
 
-Debt_List = []
+Debt_List.txt = []
 
 with open("Debt_List.txt", "r") as f:
     for line in f:
