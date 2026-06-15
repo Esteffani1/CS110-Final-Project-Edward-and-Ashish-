@@ -2,9 +2,9 @@
 #It allows users to input and manage their debt information.
 
 class DebtEntry:
-    def __init__(self, name, amount, interest_rate, minimum_payment):
+    def __init__(self, name, balance, interest_rate, minimum_payment):
         self.name = name
-        self.amount = amount
+        self.balance = balance
         self.interest_rate = interest_rate
         self.minimum_payment = minimum_payment
 
@@ -40,34 +40,27 @@ def create_debt_entries_from_input():
     return entries
 
 
-def create_debt_entries_from_iterable(data):
-    """Create DebtEntry objects from an iterable of tuples/lists:
-    (name, balance, interest_rate, minimum_payment).
-    Useful for programmatic creation and testing.
+def write_debt_entries_to_file(entries):
+    """Write a list of DebtEntry objects to a text file as CSV.
+
+    The first line of the file is preserved, and new debt entries are written
+    starting at line 2. Writes to Debt_List.txt.
     """
-    entries = []
-    for item in data:
-        name, balance, interest, minimum = item
-        if interest > 1:
-            interest = interest / 100.0
-        entries.append(DebtEntry(name, float(balance), float(interest), float(minimum)))
-    return entries
+    first_line = ""
+    try:
+        with open("Debt_List.txt", "r") as f:
+            lines = f.readlines()
+            if lines:
+                first_line = lines[0]
+    except FileNotFoundError:
+        first_line = "name,balance,interest_rate,minimum_payment\n"
 
-
-def write_debt_entries_to_file(entries, path=None):
-    """Write a list of DebtEntry objects to a text file as CSV (no header).
-
-    Each line: name,balance,interest_rate,minimum_payment
-    interest_rate is written as a decimal (e.g. 0.05 for 5%).
-    If `path` is None, writes to Debt_list.txt next to this module.
-    """
-    if path is None:
-        path = os.path.join(os.path.dirname(__file__), "Debt_list.txt")
-    with open(path, "w", encoding="utf-8") as f:
+    with open("Debt_List.txt", "w") as f:
+        f.write(first_line)
         for e in entries:
             line = f"{e.name},{e.balance},{e.interest_rate},{e.minimum_payment}\n"
             f.write(line)
-    return path
+    return "Debt_List.txt"
 
 
 if __name__ == "__main__":
@@ -76,6 +69,5 @@ if __name__ == "__main__":
     print("\nCreated entries:")
     for d in debts:
         print(d)
-    save_path = os.path.join(os.path.dirname(__file__), "Debt_list.txt")
-    write_debt_entries_to_file(debts, save_path)
-    print(f"\nSaved {len(debts)} entries to: {save_path}")
+    write_debt_entries_to_file(debts)
+    print(f"\nSaved {len(debts)} entries to: Debt_List.txt")
