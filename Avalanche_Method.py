@@ -4,9 +4,8 @@
 from Debt_Entry import DebtEntry, write_debt_entries_to_file
 
 
-def read_debt_entries_from_file():
+def read_debt_entries_from_file(path="Debt_List.txt"):
     """Read DebtEntry objects from Debt_List.txt."""
-    path = "Debt_List.txt"
     entries = []
     with open(path, "r") as f:
         for line in f:
@@ -35,8 +34,8 @@ def sort_debt_entries_by_interest(entries):
     return sorted(entries, key=get_interest_rate, reverse=True)
 
 
-def load_and_sort_debts():
-    debts = read_debt_entries_from_file()
+def load_and_sort_debts(path="Debt_List.txt"):
+    debts = read_debt_entries_from_file(path)
     sorted_debts = sort_debt_entries_by_interest(debts)
     write_debt_entries_to_file(sorted_debts)
     return sorted_debts
