@@ -1,5 +1,6 @@
 #This is the Debt Entry module for the debt payment application.
 #It allows users to input and manage their debt information.
+#A comment to ensure that we can push from Ashish -> GitHub.
 
 class DebtEntry:
     def __init__(self, name, balance, interest_rate, minimum_payment):
