@@ -41,22 +41,9 @@ def create_debt_entries_from_input():
 
 
 def write_debt_entries_to_file(entries):
-    """Write a list of DebtEntry objects to a text file as CSV.
-
-    The first line of the file is preserved, and new debt entries are written
-    starting at line 2. Writes to Debt_List.txt.
-    """
-    first_line = ""
-    try:
-        with open("Debt_List.txt", "r") as f:
-            lines = f.readlines()
-            if lines:
-                first_line = lines[0]
-    except FileNotFoundError:
-        first_line = "name,balance,interest_rate,minimum_payment\n"
-
+    """Write a list of DebtEntry objects to Debt_List.txt as CSV."""
+    
     with open("Debt_List.txt", "w") as f:
-        f.write(first_line)
         for e in entries:
             line = f"{e.name},{e.balance},{e.interest_rate},{e.minimum_payment}\n"
             f.write(line)

@@ -1,1 +1,0 @@
-#This is where the users debt information is stored into a list.
